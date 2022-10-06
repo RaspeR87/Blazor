@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <History>True|2022-09-27T19:14:36.2477017Z;True|2022-09-27T20:52:29.8525768+02:00;True|2022-09-27T20:50:28.1946751+02:00;True|2022-09-27T20:45:00.3789095+02:00;False|2022-09-27T20:44:48.4965561+02:00;True|2022-09-27T20:35:53.1885964+02:00;False|2022-09-27T20:34:43.0623224+02:00;True|2022-09-27T20:32:47.5601098+02:00;True|2022-09-27T20:30:54.5335755+02:00;</History>
+    <LastFailureDetails />
+    <_PublishTargetUrl>\\bruneta\Web\dev5</_PublishTargetUrl>
+  </PropertyGroup>
+</Project>
