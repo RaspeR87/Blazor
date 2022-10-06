@@ -1,0 +1,75 @@
+﻿@inject INTKDBRepository db
+
+<div class="alert alert-secondary mt-4">
+    <span class="oi oi-pencil me-2" aria-hidden="true"></span>
+    <strong>@Title</strong>
+
+    <EditForm Model=Mnenje OnValidSubmit=OddajMnenje>
+        <div class="form-field">
+            <label>Ime</label>
+            <div>
+                <InputText @bind-Value="Mnenje!.Name" />
+                <ValidationMessage For="@(() => Mnenje!.Name)" />
+            </div>
+        </div>
+        <div class="form-field">
+            <label>Moj TOP Blazor</label>
+            <div>
+                <InputSelect @bind-Value="Mnenje!.MojBlazor">
+                    <option></option>
+                    @foreach (var blazorItem in VrsteBlazorjev!)
+                    {
+                        <option>@blazorItem</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => Mnenje!.MojBlazor)" />
+            </div>
+        </div>
+        <button class="checkout-button btn btn-warning" type="Submit">
+            Oddaj
+        </button>
+        <DataAnnotationsValidator />
+    </EditForm>
+
+    <div>
+        <h2>Vsa mnenja:</h2>
+        @if (VsaMnenja != null)
+        {
+            foreach (var mnenjeItem in VsaMnenja)
+            {
+                <div>@mnenjeItem.Name | @mnenjeItem.MojBlazor</div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? Title { get; set; }
+    [Parameter]
+    public List<string>? VrsteBlazorjev { get; set; }
+
+    private Mnenje? Mnenje { get; set; }
+    private List<Mnenje>? VsaMnenja { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Mnenje = new Mnenje();
+
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        VsaMnenja = await db.GetAllMnenje();
+    }
+
+    async Task OddajMnenje()
+    {
+        await db.AddMnenje(Mnenje!);
+
+        Mnenje = new Mnenje();
+
+        await LoadData();
+    }
+}

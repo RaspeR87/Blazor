@@ -1,0 +1,29 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Pozdravljeni na NTK 2022!</h1>
+
+Pred vami je Blazor aplikacija, ki deluje na vseh treh verzijah Blazor-ja:
+<ul>
+    @foreach (var blazorItem in VrsteBlazorjev!)
+    {
+        <li>@blazorItem</li>
+    }
+</ul>
+
+<SurveyPrompt Title="Katera verzija Blazor-ja ti je najbolj všeč?" VrsteBlazorjev="@VrsteBlazorjev" />
+
+@code {
+    private List<string>? VrsteBlazorjev { get; set; }
+
+    protected override void OnInitialized()
+    {
+        VrsteBlazorjev = new List<string>()
+        {
+            "Blazor Server",
+            "Blazor WebAssembly",
+            "Blazor Hybrid"
+        };
+    }
+}

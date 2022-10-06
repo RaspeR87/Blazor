@@ -1,0 +1,44 @@
+﻿@page "/chat"
+
+@using Microsoft.AspNetCore.SignalR.Client
+
+<PageTitle>NTK Chat</PageTitle>
+
+<h1>NTK Chat</h1>
+
+<div>@((MarkupString)chatMessages)</div>
+<div>
+    <input type="text" @bind="inputMessage" placeholder="Vnesi sporočilo" />
+</div>
+<div>
+    <button @onclick="SendMessage">Pošlji</button>
+</div>
+
+@code {
+    private HubConnection _connection;
+
+    private string chatMessages { get; set; } = "";
+    private string inputMessage { get; set; } = "";
+
+	protected override async Task OnInitializedAsync()
+	{
+		_connection = new HubConnectionBuilder()
+			.WithUrl("https://dev5.kompas-xnet.si/chat")
+			.Build();
+
+		_connection.On<string>("MessageReceived", (message) =>
+		{
+			chatMessages += $"<br />{message}";
+			StateHasChanged();
+		});
+
+		await _connection.StartAsync();
+	}
+
+	private async void SendMessage()
+	{
+		await _connection.InvokeCoreAsync("SendMessage", args: new[] { inputMessage });
+
+		inputMessage = String.Empty;
+	}
+}
